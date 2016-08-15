@@ -1,21 +1,17 @@
-import os
-import sys
-
-
-def run():
-	pass
-
-
-if __name__ == '__main__':
+def clean(cont):
 	try:
-		src_f_name = sys.argv[1]
-		op_f_name = sys.argv[2]
-
-		with open(src_f_name, 'r') as f_src:
-			contents = f_src.read()
-			with open(op_f_name, 'w') as f_out:
-				f_out.write(contents)	
-
+		a = len(cont)
+		i = 0
+		wh = {b'\r', b' ', b'\t'}
+		while i < a:
+			if bytes([cont[i]]) == b'\n':
+				while i - 1 >= 0:
+					if bytes([cont[i - 1]]) not in wh:
+						break
+					cont = cont[:i - 1] + cont[i:]
+					i -= 1
+					a -= 1
+			i += 1
 	except IndexError:
-		print ''
-
+		print("Error at", i)
+	return cont
